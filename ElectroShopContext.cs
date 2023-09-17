@@ -82,6 +82,8 @@ public class ElectroShopContext: DbContext
             role.ToTable("Roles");
             role.HasKey(p=>p.RoleId);
             role.Property(p=>p.Description).IsRequired().HasMaxLength(20);
+            role.HasData(rolesInit);
+            
            
 
         });
@@ -89,12 +91,13 @@ public class ElectroShopContext: DbContext
         modelBuilder.Entity<User>(user=>{
             user.ToTable("Users");
             user.HasKey(p=>p.UserId);
-            user.HasOne(p=>p.Role).WithMany(p=>p.Users).HasForeignKey(p=>p.RoleId);
+            user.HasOne(p=>p.Role).WithMany(p=>p.Users).HasForeignKey(p=>p.RoleId).IsRequired(false);
             user.Property(p=>p.Name).IsRequired().HasMaxLength(20);
             user.Property(p=>p.Surname).IsRequired().HasMaxLength(20);
-            user.Property(p=>p.Email).IsRequired().HasMaxLength(40);
+            user.HasAlternateKey(p=>p.Email);
             user.Property(p=>p.RoleId).IsRequired();
             user.Property(p=>p.Password).IsRequired().HasMaxLength(20);
+            user.HasData(usersInit);
 
         });
 

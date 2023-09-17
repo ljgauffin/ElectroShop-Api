@@ -10,7 +10,8 @@ public class User
     public string Password {get;set;}
 
     public Guid RoleId { get; set; }
-    public virtual Role Role {get;set;}
+    
+    public virtual Role? Role {get;set;}
 
 }
 
