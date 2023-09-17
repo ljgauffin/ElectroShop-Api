@@ -1,4 +1,5 @@
 using ElectroShop;
+using ElectroShop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSqlServer<ElectroShopContext>(builder.Configuration.GetConnectionString("cnElectroShop"));
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

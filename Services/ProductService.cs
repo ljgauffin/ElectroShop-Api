@@ -1,6 +1,7 @@
 
 
 using ElectroShop.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElectroShop.Services;
 
@@ -13,12 +14,13 @@ public class ProductService: IProductService
     }
 
     public IEnumerable<Product> Get(){
-        return context.Products;
+        return context.Products.Include(p=>p.Category);
     }
 
 }
 
 
 public interface IProductService{
+    IEnumerable<Product> Get();
 
 }
