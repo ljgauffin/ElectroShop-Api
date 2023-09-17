@@ -47,6 +47,28 @@ namespace ElectroShop.Controllers
            
         }
 
+        [HttpGet]
+        public IActionResult Get([FromBody]LogModel login)
+        {
+             var user = userService.Authenticate(login.Email, login.Password);
+
+            if(user != null )
+            {
+                // Crear el token
+
+                var token = Generate(user);
+
+                LogResponse response = new LogResponse(){User=user, Token=token};
+                return Ok(response);
+
+                
+            } 
+
+            return NotFound("Usuario no encontrado");
+
+           
+        }
+
         
 
         private string Generate(User user)
@@ -76,6 +98,9 @@ namespace ElectroShop.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+       
+
     }
 
 
@@ -90,4 +115,5 @@ namespace ElectroShop.Controllers
         public User User { get; set; }
         public string Token { get; set; }
     }
+    
 }

@@ -10,7 +10,7 @@ public class ElectroShopContext: DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users {get; set;}
-    public DbSet<User> Carts {get; set;}
+    public DbSet<Cart> Carts {get; set;}
 
 
     public ElectroShopContext(DbContextOptions<ElectroShopContext> options): base (options)

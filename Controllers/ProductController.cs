@@ -1,4 +1,5 @@
 
+using System.Security.Claims;
 using ElectroShop.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,12 @@ namespace ElectroShop.Controllers;
 public class ProductController: ControllerBase
 {
     IProductService productService;
-    public ProductController(IProductService service)
+    IUserService userService;
+
+    public ProductController(IProductService service,IUserService userService)
     {
         productService = service;
+        this.userService = userService;
     }
 
     [HttpGet]
@@ -20,8 +24,12 @@ public class ProductController: ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize(Roles = ("Admin"))]
+    //[Authorize(Roles = ("Admin"))]
+    [Authorize]
     public IActionResult Get(Guid id){
-        return Ok (productService.Get(id));
+        var identity = HttpContext.User.Identity as ClaimsIdentity;
+        var user = userService.GetUserContext(HttpContext);
+        return Ok (user);
+       // return Ok (productService.Get(id));
     }
 }
