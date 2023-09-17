@@ -16,11 +16,15 @@ public class ProductService: IProductService
     public IEnumerable<Product> Get(){
         return context.Products.Include(p=>p.Category);
     }
+    public IEnumerable<Product> Get(Guid id){
+        return context.Products.Include(p=>p.Category).Where(p=>p.ProductId ==id);
+    }
 
 }
 
 
 public interface IProductService{
     IEnumerable<Product> Get();
+    IEnumerable<Product> Get(Guid id);
 
 }

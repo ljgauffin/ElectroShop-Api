@@ -7,6 +7,8 @@ public class ElectroShopContext: DbContext
 {
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<User> Users {get; set;}
 
 
     public ElectroShopContext(DbContextOptions<ElectroShopContext> options): base (options)
@@ -36,6 +38,21 @@ public class ElectroShopContext: DbContext
             new Product() { ProductId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4840c"), Description = "Auriculares in-ear inalámbricos Wave 100TWS" , CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4836c"), WebDescription = "El formato perfecto para vos. Al ser in-ear, mejoran la calidad del audio y son de tamaño pequeño para poder insertarse en tu oreja.", Weight=0.8, Width=10, Height=30,Depth=25, Price=500, MinimunQuantity=2 },
            
         };
+
+        List<Role> rolesInit = new()
+        {
+            new Role() {RoleId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4844c"), Description="User" },
+            new Role() {RoleId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4845c"), Description="Seller" },
+            new Role() {RoleId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4846c"), Description="Admin" }
+            
+        };
+
+        List<User> usersInit = new()
+        {
+            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4841c"), Name="Juan", Surname="Perez",Email="juan@perez.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4844c") },
+            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4842c"), Name="Pedro", Surname="Gonzales",Email="pedro@gozales.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4845c")},
+            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4843c"), Name="Mario", Surname="Ramirez",Email="Mario@ramirez.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4846c") },
+        };
         
 
         modelBuilder.Entity<Category>(category =>{
@@ -56,9 +73,28 @@ public class ElectroShopContext: DbContext
             product.HasOne(p=>p.Category).WithMany(p=>p.Products).HasForeignKey(p=>p.CategoryId);
             product.Property(p=>p.WebDescription).IsRequired().HasMaxLength(1000);
             product.Property(p=>p.Active).HasDefaultValue(true);
-            product.Property(p=>p.Price).IsRequired();
+            product.Property(p=>p.Price).IsRequired().HasColumnType("DECIMAL").HasPrecision(15,2);
             product.HasData(productsInit);
 
+
+        });
+        modelBuilder.Entity<Role>(role=>{
+            role.ToTable("Roles");
+            role.HasKey(p=>p.RoleId);
+            role.Property(p=>p.Description).IsRequired().HasMaxLength(20);
+           
+
+        });
+
+        modelBuilder.Entity<User>(user=>{
+            user.ToTable("Users");
+            user.HasKey(p=>p.UserId);
+            user.HasOne(p=>p.Role).WithMany(p=>p.Users).HasForeignKey(p=>p.RoleId);
+            user.Property(p=>p.Name).IsRequired().HasMaxLength(20);
+            user.Property(p=>p.Surname).IsRequired().HasMaxLength(20);
+            user.Property(p=>p.Email).IsRequired().HasMaxLength(40);
+            user.Property(p=>p.RoleId).IsRequired();
+            user.Property(p=>p.Password).IsRequired().HasMaxLength(20);
 
         });
 

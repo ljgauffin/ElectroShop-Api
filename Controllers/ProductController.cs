@@ -17,4 +17,9 @@ public class ProductController: ControllerBase
     public IActionResult Get(){
         return Ok (productService.Get());
     }
+
+    [HttpGet("{id}")]
+    public IActionResult Get(Guid id){
+        return Ok (productService.Get(id));
+    }
 }

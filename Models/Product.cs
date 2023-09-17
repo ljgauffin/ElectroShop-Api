@@ -11,7 +11,7 @@ public class Product
     public string Description { get; set; }
     public Guid CategoryId { get; set; }
     public string WebDescription { get; set; }
-    public bool Active { get; set; }
+    public bool? Active { get; set; }
     public double Weight { get; set; }
     public double Height { get; set; }  
     public double Width { get; set; }
@@ -19,11 +19,13 @@ public class Product
     public Decimal Price { get; set; }
     public int MinimunQuantity { get; set; }
 
-public Product()
-{
-    Active=true;
-}
+
 
     
      public virtual Category Category { get; set; }
+
+     public Product()
+    {
+        Active=true;
+    }
 }
