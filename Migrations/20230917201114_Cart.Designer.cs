@@ -4,6 +4,7 @@ using ElectroShop;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectroShop.Migrations
 {
     [DbContext(typeof(ElectroShopContext))]
-    partial class ElectroShopContextModelSnapshot : ModelSnapshot
+    [Migration("20230917201114_Cart")]
+    partial class Cart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,35 +53,6 @@ namespace ElectroShop.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Carts", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            CartId = new Guid("b3a3096e-4274-4799-a843-380868d4843c"),
-                            DateTime = new DateTime(2023, 9, 17, 17, 16, 24, 684, DateTimeKind.Local).AddTicks(7987),
-                            ProductId = new Guid("b3a3096e-4274-4799-a843-380868d4838c"),
-                            PurchaseId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Quantity = 0,
-                            UserId = new Guid("b3a3096e-4274-4799-a843-380868d4841c")
-                        },
-                        new
-                        {
-                            CartId = new Guid("b3a3096e-4274-4799-a843-380868d4844c"),
-                            DateTime = new DateTime(2023, 9, 17, 17, 16, 24, 684, DateTimeKind.Local).AddTicks(8003),
-                            ProductId = new Guid("b3a3096e-4274-4799-a843-380868d4839c"),
-                            PurchaseId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Quantity = 0,
-                            UserId = new Guid("b3a3096e-4274-4799-a843-380868d4841c")
-                        },
-                        new
-                        {
-                            CartId = new Guid("b3a3096e-4274-4799-a843-380868d4845c"),
-                            DateTime = new DateTime(2023, 9, 17, 17, 16, 24, 684, DateTimeKind.Local).AddTicks(8006),
-                            ProductId = new Guid("b3a3096e-4274-4799-a843-380868d4840c"),
-                            PurchaseId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Quantity = 0,
-                            UserId = new Guid("b3a3096e-4274-4799-a843-380868d4841c")
-                        });
                 });
 
             modelBuilder.Entity("ElectroShop.Models.Category", b =>

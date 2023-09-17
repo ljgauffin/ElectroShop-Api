@@ -23,6 +23,9 @@ public class Product
 
     
      public virtual Category Category { get; set; }
+     
+     [JsonIgnore]
+     public virtual IEnumerable<Cart> Carts {get;set;}
 
      public Product()
     {

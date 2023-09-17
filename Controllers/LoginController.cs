@@ -36,7 +36,8 @@ namespace ElectroShop.Controllers
 
                 var token = Generate(user);
 
-                return Ok(token);
+                LogResponse response = new LogResponse(){User=user, Token=token};
+                return Ok(response);
 
                 
             } 
@@ -79,8 +80,14 @@ namespace ElectroShop.Controllers
 
 
     public class LogModel
-{
-    public string Email { get; set; }
-    public string Password { get; set; }
-}
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class LogResponse
+    {
+        public User User { get; set; }
+        public string Token { get; set; }
+    }
 }

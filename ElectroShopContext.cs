@@ -1,6 +1,7 @@
 using ElectroShop.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace ElectroShop;
 
 public class ElectroShopContext: DbContext
@@ -9,6 +10,7 @@ public class ElectroShopContext: DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users {get; set;}
+    public DbSet<User> Carts {get; set;}
 
 
     public ElectroShopContext(DbContextOptions<ElectroShopContext> options): base (options)
@@ -19,40 +21,16 @@ public class ElectroShopContext: DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         //Seed data-----------------------------
-        List<Category> categoriesInit = new()
-        {
-            new Category() { CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4831c"), Description = "Heladeras" },
-            new Category() { CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4832c"), Description = "Notebooks" },
-            new Category() { CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4833c"), Description = "Celulares" },
-            new Category() { CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4834c"), Description = "Mouses" },
-            new Category() { CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4835c"), Description = "Teclados" },
-            new Category() { CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4836c"), Description = "Auriculares" },
-            new Category() { CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4837c"), Description = "Tablets" },
-            new Category() { CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4838c"), Description = "TVs" }
-        };
+        List<Category> categoriesInit = Constants.Seeds.categoriesInit;
+        
 
-        List<Product> productsInit = new()
-        {
-            new Product() { ProductId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4838c"), Description = "Heladera Ciclica Top Mount Hsi-ct291b 273 Lts Blanca" , CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4831c"), WebDescription = "HELADERA CICLICA TOP MOUNT SIAM HSI-CT291B 273 LTS BLANCA 220V CAMBIO EN EL SENTIDO DE APERTURA DE PUERTAS", Weight=250, Width=20, Height=30,Depth=20, Price=2000, MinimunQuantity=2 },
-            new Product() { ProductId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4839c"), Description = "Notebook Lenovo IdeaPad 3i Intel I5" , CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4832c"), WebDescription = "La notebook Lenovo 81X700FVUS es una solución tanto para trabajar y estudiar como para entretenerte. Al ser portátil, el escritorio dejará de ser tu único espacio de uso para abrirte las puertas a otros ambientes ya sea en tu casa o en la oficina.", Weight=0.2, Width=1, Height=7,Depth=5, Price=1000, MinimunQuantity=2 },
-            new Product() { ProductId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4840c"), Description = "Auriculares in-ear inalámbricos Wave 100TWS" , CategoryId = Guid.Parse("b3a3096e-4274-4799-a843-380868d4836c"), WebDescription = "El formato perfecto para vos. Al ser in-ear, mejoran la calidad del audio y son de tamaño pequeño para poder insertarse en tu oreja.", Weight=0.8, Width=10, Height=30,Depth=25, Price=500, MinimunQuantity=2 },
-           
-        };
+        List<Product> productsInit = Constants.Seeds.productsInit;
 
-        List<Role> rolesInit = new()
-        {
-            new Role() {RoleId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4844c"), Description="User" },
-            new Role() {RoleId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4845c"), Description="Seller" },
-            new Role() {RoleId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4846c"), Description="Admin" }
-            
-        };
+        List<Role> rolesInit = Constants.Seeds.rolesInit;
 
-        List<User> usersInit = new()
-        {
-            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4841c"), Name="Juan", Surname="Perez",Email="juan@perez.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4844c") },
-            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4842c"), Name="Pedro", Surname="Gonzales",Email="pedro@gozales.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4845c")},
-            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4843c"), Name="Mario", Surname="Ramirez",Email="Mario@ramirez.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4846c") },
-        };
+        List<User> usersInit = Constants.Seeds.usersInit;
+
+        List<Cart> cartsInit = Constants.Seeds.cartsInit;
         
 
         modelBuilder.Entity<Category>(category =>{
@@ -98,6 +76,17 @@ public class ElectroShopContext: DbContext
             user.Property(p=>p.RoleId).IsRequired();
             user.Property(p=>p.Password).IsRequired().HasMaxLength(20);
             user.HasData(usersInit);
+
+        });
+
+         modelBuilder.Entity<Cart>(cart=>{
+            cart.ToTable("Carts");
+            cart.HasKey(p=>p.CartId);
+            cart.HasOne(p=>p.Product).WithMany(p=>p.Carts).HasForeignKey(p=>p.ProductId);
+            cart.HasOne(p=>p.User).WithMany(p=>p.Carts).HasForeignKey(p=>p.UserId);
+            cart.Property(p=>p.DateTime).IsRequired();
+            cart.Property(p=>p.Quantity).IsRequired();
+            cart.HasData(cartsInit);
 
         });
 

@@ -1,5 +1,6 @@
 
 using ElectroShop.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectroShop.Controllers;
@@ -19,6 +20,7 @@ public class ProductController: ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = ("Admin"))]
     public IActionResult Get(Guid id){
         return Ok (productService.Get(id));
     }

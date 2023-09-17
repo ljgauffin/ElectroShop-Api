@@ -12,6 +12,8 @@ public class User
     public Guid RoleId { get; set; }
     
     public virtual Role? Role {get;set;}
+    
+    public virtual IEnumerable<Cart> Carts {get;set;}
 
 }
 

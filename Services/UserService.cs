@@ -14,8 +14,11 @@ public class UserService:IUserService
     public IEnumerable<User> Get(User user){
         return context.Users.Include(p=>p.Role).Where(p=>p.Email==user.Email);
     }
-    public User Authenticate(string email, string password){
-        return  context.Users.Include(p=>p.Role).FirstOrDefault(p => p.Email == email && p.Password == password);
+    public User? Authenticate(string email, string password){
+        return  context.Users.Include(p=>p.Role)
+                .Include(p=>p.Carts)
+                .ThenInclude(p=>p.Product)
+                .FirstOrDefault(p => p.Email == email && p.Password == password);
     }
 
     
