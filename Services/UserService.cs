@@ -23,7 +23,7 @@ public class UserService:IUserService
     }
     public User? Authenticate(string email, string password){
         return  context.Users.Include(p=>p.Role)
-                .Include(p=>p.Carts)
+                .Include(p=>p.Carts.Where(o=>o.PurchaseId==Guid.Empty))
                 .ThenInclude(p=>p.Product)
                 .FirstOrDefault(p => p.Email == email && p.Password == password);
     }

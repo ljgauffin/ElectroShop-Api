@@ -29,7 +29,7 @@ public class ProductController: ControllerBase
     public IActionResult Get(Guid id){
         var identity = HttpContext.User.Identity as ClaimsIdentity;
         var user = userService.GetUserContext(HttpContext);
-        return Ok (user);
-       // return Ok (productService.Get(id));
+        // return Ok (user);
+       return Ok (productService.Get(id));
     }
 }
