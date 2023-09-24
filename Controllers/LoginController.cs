@@ -28,20 +28,29 @@ namespace ElectroShop.Controllers
         [HttpPost]
         public IActionResult Login([FromBody]LogModel login)
         {
-             var user = userService.Authenticate(login.Email, login.Password);
-
-            if(user != null )
+            try
             {
-                // Crear el token
+                 var user = userService.Authenticate(login.Email, login.Password);
 
-                var token = Generate(user);
+                if(user != null )
+                {
+                    // Crear el token
 
-                LogResponse response = new LogResponse(){User=user, Token=token};
-                return Ok(response);
+                    var token = Generate(user);
 
-                
-            } 
+                    LogResponse response = new LogResponse(){User=user, Token=token};
+                    return Ok(response);
 
+                    
+                } 
+            }catch(Exception ex){
+
+                return StatusCode(500, new ErrorResponse
+                {
+                    Status = 500,
+                    Message = "Internal server error."
+                });
+            }
             return NotFound("Usuario no encontrado");
 
            
@@ -59,12 +68,14 @@ namespace ElectroShop.Controllers
                 var token = Generate(user);
 
                 LogResponse response = new LogResponse(){User=user, Token=token};
-                return Ok(response);
-
-                
+                return Ok(response);    
             } 
 
-            return NotFound("Usuario no encontrado");
+            return NotFound(new ErrorResponse
+                {
+                    Status = 404,
+                    Message = "User not found."
+                });
 
            
         }

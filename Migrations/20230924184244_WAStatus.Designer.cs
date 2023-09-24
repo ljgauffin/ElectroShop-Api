@@ -4,6 +4,7 @@ using ElectroShop;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectroShop.Migrations
 {
     [DbContext(typeof(ElectroShopContext))]
-    partial class ElectroShopContextModelSnapshot : ModelSnapshot
+    [Migration("20230924184244_WAStatus")]
+    partial class WAStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,7 @@ namespace ElectroShop.Migrations
                         new
                         {
                             CartId = new Guid("b3a3096e-4274-4799-a843-380868d4843c"),
-                            DateTime = new DateTime(2023, 9, 24, 17, 58, 10, 955, DateTimeKind.Local).AddTicks(4617),
+                            DateTime = new DateTime(2023, 9, 24, 15, 42, 43, 37, DateTimeKind.Local).AddTicks(1589),
                             ProductId = new Guid("b3a3096e-4274-4799-a843-380868d4838c"),
                             PurchaseId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Quantity = 0,
@@ -64,7 +67,7 @@ namespace ElectroShop.Migrations
                         new
                         {
                             CartId = new Guid("b3a3096e-4274-4799-a843-380868d4844c"),
-                            DateTime = new DateTime(2023, 9, 24, 17, 58, 10, 955, DateTimeKind.Local).AddTicks(5338),
+                            DateTime = new DateTime(2023, 9, 24, 15, 42, 43, 37, DateTimeKind.Local).AddTicks(1950),
                             ProductId = new Guid("b3a3096e-4274-4799-a843-380868d4839c"),
                             PurchaseId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Quantity = 0,
@@ -73,7 +76,7 @@ namespace ElectroShop.Migrations
                         new
                         {
                             CartId = new Guid("b3a3096e-4274-4799-a843-380868d4845c"),
-                            DateTime = new DateTime(2023, 9, 24, 17, 58, 10, 955, DateTimeKind.Local).AddTicks(5344),
+                            DateTime = new DateTime(2023, 9, 24, 15, 42, 43, 37, DateTimeKind.Local).AddTicks(1955),
                             ProductId = new Guid("b3a3096e-4274-4799-a843-380868d4840c"),
                             PurchaseId = new Guid("00000000-0000-0000-0000-000000000000"),
                             Quantity = 0,
@@ -319,7 +322,7 @@ namespace ElectroShop.Migrations
                             Name = "Juan",
                             Password = "12345678",
                             PhoneNumber = "455454554",
-                            PhoneValidatedAt = new DateTime(2023, 9, 24, 17, 58, 10, 952, DateTimeKind.Local).AddTicks(8699),
+                            PhoneValidatedAt = new DateTime(2023, 9, 24, 15, 42, 43, 35, DateTimeKind.Local).AddTicks(584),
                             RoleId = new Guid("b3a3096e-4274-4799-a843-380868d4844c"),
                             Surname = "Perez"
                         },
@@ -330,7 +333,7 @@ namespace ElectroShop.Migrations
                             Name = "Pedro",
                             Password = "12345678",
                             PhoneNumber = "1234567899",
-                            PhoneValidatedAt = new DateTime(2023, 9, 24, 17, 58, 10, 955, DateTimeKind.Local).AddTicks(1523),
+                            PhoneValidatedAt = new DateTime(2023, 9, 24, 15, 42, 43, 36, DateTimeKind.Local).AddTicks(9794),
                             RoleId = new Guid("b3a3096e-4274-4799-a843-380868d4845c"),
                             Surname = "Gonzales"
                         },
@@ -341,7 +344,7 @@ namespace ElectroShop.Migrations
                             Name = "Mario",
                             Password = "12345678",
                             PhoneNumber = "1234567878",
-                            PhoneValidatedAt = new DateTime(2023, 9, 24, 17, 58, 10, 955, DateTimeKind.Local).AddTicks(1558),
+                            PhoneValidatedAt = new DateTime(2023, 9, 24, 15, 42, 43, 36, DateTimeKind.Local).AddTicks(9812),
                             RoleId = new Guid("b3a3096e-4274-4799-a843-380868d4846c"),
                             Surname = "Ramirez"
                         });
@@ -353,6 +356,7 @@ namespace ElectroShop.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberOfTries")

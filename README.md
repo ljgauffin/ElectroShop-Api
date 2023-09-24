@@ -7,6 +7,7 @@ The ElectroShop API is a RESTful web service for managing an e-commerce platform
 - [Getting Started](#getting-started)
 - [Endpoints](#endpoints)
 - [Authentication](#authentication)
+- [Pending Improvements](#pending-improvements)
 - [Error Handling](#error-handling)
 - [Usage Examples](#usage-examples)
 - [Contributing](#contributing)
@@ -19,7 +20,7 @@ To get started with the ElectroShop API, follow these steps:
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/electroshop-api.git
+   git clone https://github.com/ljgauffin/ElectroShop-Api.git
 
 2. Install the required dependencies:
 
@@ -51,6 +52,13 @@ Example header:
     Authorization: Bearer your_jwt_token_here
 
 To obtain a JWT token, make a POST request to /api/auth/login with valid user credentials.
+
+## Pending Improvements
+* Completing CRUD of existing objects
+* WhatsApp bot
+* Database and CRUD expantion
+* Logger
+* Finish Swagger documentation
 
 ## Error Handling
 The API returns detailed error messages in JSON format when errors occur. Be sure to check the status code and the message field in the response for error information.

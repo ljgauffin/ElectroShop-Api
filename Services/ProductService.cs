@@ -16,8 +16,10 @@ public class ProductService: IProductService
     public IEnumerable<Product> Get(){
         return context.Products.Include(p=>p.Category);
     }
-    public IEnumerable<Product> Get(Guid id){
-        return context.Products.Include(p=>p.Category).Where(p=>p.ProductId ==id);
+    public Product Get(Guid id){
+
+        
+        return context.Products.Include(p=>p.Category).FirstOrDefault(p=>p.ProductId ==id);
     }
     
 
@@ -26,7 +28,7 @@ public class ProductService: IProductService
 
 public interface IProductService{
     IEnumerable<Product> Get();
-    IEnumerable<Product> Get(Guid id);
+    Product Get(Guid id);
     
 
 }

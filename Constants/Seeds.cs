@@ -34,9 +34,9 @@ public class Seeds
 
         public static List<User> usersInit = new()
         {
-            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4841c"), Name="Juan", Surname="Perez",Email="juan@perez.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4844c") },
-            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4842c"), Name="Pedro", Surname="Gonzales",Email="pedro@gozales.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4845c")},
-            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4843c"), Name="Mario", Surname="Ramirez",Email="Mario@ramirez.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4846c") },
+            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4841c"), Name="Juan", Surname="Perez",Email="juan@perez.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4844c"), PhoneNumber="455454554", PhoneValidatedAt = DateTime.Now },
+            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4842c"), Name="Pedro", Surname="Gonzales",Email="pedro@gozales.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4845c"), PhoneNumber="1234567899", PhoneValidatedAt = DateTime.Now},
+            new User() {UserId= Guid.Parse("b3a3096e-4274-4799-a843-380868d4843c"), Name="Mario", Surname="Ramirez",Email="Mario@ramirez.com",Password="12345678", RoleId=Guid.Parse("b3a3096e-4274-4799-a843-380868d4846c"), PhoneNumber="1234567878", PhoneValidatedAt = DateTime.Now },
         };
 
         public static List<Cart> cartsInit = new()

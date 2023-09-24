@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,8 +37,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "ToDo API",
-        Description = "An ASP.NET Core Web API for managing ToDo items",
+        Title = "EelectroShop API",
+        Description = "An ASP.NET Core Web API for ElectroShop eCommerce website",
         // TermsOfService = new Uri("https://example.com/terms"),
         // Contact = new OpenApiContact
         // {
@@ -58,11 +59,20 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddSqlServer<ElectroShopContext>(builder.Configuration.GetConnectionString("cnElectroShop"));
 
+
+// builder.Services.AddDbContext<ElectroShopContext>(p=>p.UseInMemoryDatabase("ElectroShop"));
+// ElectroShopContext dbContext = new();
+
+
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IWAService, WAService>();
+builder.Services.AddScoped<IWAStatusService, WAStatusService>();
+builder.Services.AddScoped<IWAHandlerService, WAHandlerService>();
 
 var app = builder.Build();
 

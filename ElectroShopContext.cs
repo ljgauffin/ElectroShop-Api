@@ -11,6 +11,7 @@ public class ElectroShopContext: DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users {get; set;}
     public DbSet<Cart> Carts {get; set;}
+    public DbSet<WAStatus> WAStatus {get; set;}
 
 
     public ElectroShopContext(DbContextOptions<ElectroShopContext> options): base (options)
@@ -75,6 +76,8 @@ public class ElectroShopContext: DbContext
             user.HasAlternateKey(p=>p.Email);
             user.Property(p=>p.RoleId).IsRequired();
             user.Property(p=>p.Password).IsRequired().HasMaxLength(20);
+            user.Property(p=>p.PhoneNumber).HasMaxLength(20).IsRequired(true);
+            user.Property(p=>p.PhoneValidatedAt).IsRequired(false);
             user.HasData(usersInit);
 
         });
@@ -89,6 +92,14 @@ public class ElectroShopContext: DbContext
             cart.HasData(cartsInit);
 
         });
+
+        modelBuilder.Entity<WAStatus>(stat=>{
+            stat.ToTable("WAStatus");
+            stat.HasKey(p=>p.PhoneNumber);
+            stat.Property(p=>p.Email).IsRequired(false);
+
+        });
+
 
     }
     
