@@ -73,6 +73,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IWAService, WAService>();
 builder.Services.AddScoped<IWAStatusService, WAStatusService>();
 builder.Services.AddScoped<IWAHandlerService, WAHandlerService>();
+builder.Services.AddScoped<IWAWebhookFactory, WAWebhookFactory>();
 
 var app = builder.Build();
 

@@ -5,23 +5,26 @@ using ElectroShop.Constants;
 
 public class WaitingForValidation : IWebhookWhatsapp
 {
-    // IUserService userService;
-    // IWAStatusService wAStatusService;
-    // public WaitingForValidation(IUserService userService,IWAStatusService wAStatusService)
-    // {
-    //     this.userService = userService;
-    //     this.wAStatusService = wAStatusService;
-    // }
-
+ 
+    public IUserService  UserService  { get; set; }
+    public IWAStatusService WAStatusService { get; set; }
     public string Execute (User user, string Message){
-        if (user.Email==Message){
-            // user.PhoneValidatedAt=DateTime.Now;
-            // userService.Update(user.UserId,user);
-            
-            return ElectroShop.Constants.WAMessages.EmailValidatedSuccesfully;
-        }else{
+        WAStatus currentStatus = WAStatusService.Get(user.PhoneNumber);
+        if(currentStatus.NumberOfTries > 2)
+        {
+            return WAMessages.ErrorValidatingEmail;
+        }
 
-            return ElectroShop.Constants.WAMessages.EmailNotFound;
+        if (user.Email==Message){
+            user.PhoneValidatedAt=DateTime.Now;
+            UserService.Update(user.UserId,user);
+            WAStatusService.Delete(user.PhoneNumber);
+            
+            return WAMessages.EmailValidatedSuccesfully;
+        }else{
+            currentStatus.NumberOfTries ++; 
+            WAStatusService.Update(currentStatus);
+            return WAMessages.EmailNotFound;
         }
         
     }

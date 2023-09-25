@@ -14,12 +14,14 @@ public class WAHandlerService:IWAHandlerService
     
     IUserService userService ;
     IWAStatusService wAStatusService;
+    IWAWebhookFactory wAWebhookFactory;
 
 
-    public WAHandlerService(IUserService userService,IWAStatusService wAStatusService)
+    public WAHandlerService(IUserService userService,IWAStatusService wAStatusService,IWAWebhookFactory wAWebhookFactory)
     {
         this.userService = userService;
         this.wAStatusService = wAStatusService;
+        this.wAWebhookFactory = wAWebhookFactory;
         
     }
 
@@ -35,9 +37,9 @@ public class WAHandlerService:IWAHandlerService
             return  Constants.WAMessages.UserNotFound;
         }else if (status==null) //user doesnt have a pending status
         {
-            return  $"{user.Name}  {Constants.WAMessages.FirstGreeteng}";
+            return  Constants.WAMessages.FirstGreeteng;
         }
-        return WAWebhookFactory.getInstance().Create(status.Status, type).Execute(user,message);
+        return wAWebhookFactory.Create(status.Status, type).Execute(user,message);
         // return "no entiendo nadsa";
 
     }

@@ -37,10 +37,44 @@ public class WAStatusService:IWAStatusService
         context.SaveChanges();
 
     }
+
+    public void  Update(WAStatus wAStatus)
+    {
+        WAStatus currentStatus = context.WAStatus.FirstOrDefault(p=>p.PhoneNumber == wAStatus.PhoneNumber);
+        if(currentStatus !=null)
+        {
+            currentStatus.NumberOfTries= wAStatus.NumberOfTries;
+            currentStatus.Status= wAStatus.Status;
+            currentStatus.Email= wAStatus.Email;
+            context.SaveChanges();
+        }
+
+    }
+
+    public WAStatus? Get(string number)
+    {
+        WAStatus status = context.WAStatus.FirstOrDefault(p=>p.PhoneNumber==number);
+        return status;
+    }
+
+    public bool Delete(string number)
+    {
+        WAStatus status = context.WAStatus.FirstOrDefault(p=>p.PhoneNumber==number);
+        if(status!=null)
+        {
+            context.WAStatus.Remove(status);
+            context.SaveChanges();
+            return true;
+        }
+        return false;
+    }
 }
 
 
 public interface IWAStatusService{
     WAStatus? getCurrentStatus(string number);
     void Create(string status, User user);
+    void Update(WAStatus wAStatus);
+    WAStatus? Get(string number);
+    bool Delete(string number);
 }
